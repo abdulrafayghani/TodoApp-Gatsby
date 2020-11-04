@@ -1,5 +1,12 @@
 import React from "react"
+import { Button } from "@material-ui/core"
 
 export default function Home() {
-  return <div>Hello world!</div>
+  return (
+    <div>
+      <Button>
+          Hello
+      </Button>
+    </div>
+  )
 }
