@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { gql, useMutation, useQuery } from "@apollo/client"
-import { makeStyles } from '@material-ui/core';
+import { Box, Button, makeStyles, TextField } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
@@ -40,9 +40,11 @@ const deleteTodo = gql`
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexGrow: 1,
+    // width: '100%'
+    // display: 'flex',
+    textAlign:'center',
+    marginTop:'100px'    
+
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -85,6 +87,13 @@ export default function Home() {
 
   return (
     <div className={classes.root}>
+      <div style={{ display:'flex', justifyContent:'center'  }}>
+        <Box width='55%' > 
+          <TextField fullWidth variant='outlined' label="Add todo" onChange={(e) => setTodo(e.target.value)} /> 
+          </Box>
+          <Button >ADD</Button> 
+    </div>
+    <div style={{ display:'flex', justifyContent:'center'}} >
       <Grid item xs={12} md={6}>
         <Typography variant="h6" className={classes.title}>
         </Typography>
@@ -111,6 +120,7 @@ export default function Home() {
           </List>
         </div>
       </Grid>
+      </div>
     </div>
   )
 }
