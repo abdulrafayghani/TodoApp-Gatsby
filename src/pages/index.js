@@ -55,16 +55,15 @@ export default function Home() {
   const { loading, data, refetch } = useQuery(allTodos)
   const [createTodo, { loading: adding}] = useMutation(addTodo)
   const [discardTodo, { loading: deleting}] = useMutation(deleteTodo)
-  const [todoVal, setTodoVal] = useState("")
+  const [todo, setTodo] = useState("")
 
   const handleSubmit = async () => {
-    await createTodo({ variables: { todo: todoVal } })
+    await createTodo({ variables: { todo } })
     await refetch()
   }
 
   const handleDelete = async id => {
-    console.log(id)
-    await discardTodo({ variables: { id: id } })
+    await discardTodo({ variables: { id } })
     await refetch()
   }
 
@@ -73,7 +72,6 @@ export default function Home() {
   if (loading) {
     return <h1> ...laoding</h1>
   }
-
 
   return (
     <div className={classes.root}>
@@ -84,7 +82,7 @@ export default function Home() {
             fullWidth
             variant="outlined"
             label="Add todo"
-            onChange={e => setTodoVal(e.target.value)}
+            onChange={e => setTodo(e.target.value)}
           />
         </Box>
         <Button onClick={handleSubmit}>ADD</Button>
