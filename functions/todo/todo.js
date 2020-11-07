@@ -45,7 +45,6 @@ const resolvers = {
   },
   Mutation: {
     addTodo: async (_, { todo }) => {
-      console.log(todo)
       try {
         const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET })
 
@@ -56,14 +55,12 @@ const resolvers = {
             },
           })
         )
-        console.log(result)
         return result.data
       } catch (err) {
         console.log(err)
       }
     },
     discardTodo: async (_, { id }) => {
-      console.log(id)
       const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET })
 
       const result = await client.query(
