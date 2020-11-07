@@ -66,8 +66,9 @@ const resolvers = {
       console.log(id)
       const client = new faunadb.Client({ secret: process.env.FAUNA_SECRET })
 
-      const result = await client.query(q.Delete(q.Ref(q.Collection), id))
-      console.log(result)
+      const result = await client.query(
+        q.Delete(q.Ref(q.Collection("todos"), id))
+        )
     },
   },
 }

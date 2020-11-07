@@ -8,7 +8,6 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
 import ListItemText from "@material-ui/core/ListItemText"
 import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
-import FolderIcon from "@material-ui/icons/Folder"
 import DeleteIcon from "@material-ui/icons/Delete"
 import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography"
@@ -53,12 +52,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Home() {
-  const { loading, error, data, refetch } = useQuery(allTodos)
-  const [createTodo, reg] = useMutation(addTodo)
-  const [discardTodo] = useMutation(deleteTodo)
+  const { loading, data, refetch } = useQuery(allTodos)
+  const [createTodo, { loading: adding}] = useMutation(addTodo)
+  const [discardTodo, { loading: deleting}] = useMutation(deleteTodo)
   const [todoVal, setTodoVal] = useState("")
-
-  console.log(todoVal)
 
   const handleSubmit = async () => {
     await createTodo({ variables: { todo: todoVal } })
@@ -67,7 +64,7 @@ export default function Home() {
 
   const handleDelete = async id => {
     console.log(id)
-    await discardTodo({ variables: { id } })
+    await discardTodo({ variables: { id: id } })
     await refetch()
   }
 
@@ -77,8 +74,10 @@ export default function Home() {
     return <h1> ...laoding</h1>
   }
 
+
   return (
     <div className={classes.root}>
+      <h1> Todo App Gatsby</h1>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Box width="55%">
           <TextField
@@ -89,6 +88,7 @@ export default function Home() {
           />
         </Box>
         <Button onClick={handleSubmit}>ADD</Button>
+        {adding && <p style={{fontWeight : "bold"}}>adding data ...</p>}
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <Grid item xs={12} md={6}>
@@ -113,6 +113,7 @@ export default function Home() {
                 )
               })}
             </List>
+            {deleting && <p style={{fontWeight : "bold"}}>removing data ...</p>}
           </div>
         </Grid>
       </div>
